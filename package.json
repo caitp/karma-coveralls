@@ -1,0 +1,29 @@
+{
+  "name": "karma-coveralls",
+  "version": "0.1.0",
+  "description": "A karma plugin which uploads coverage reports to coveralls.io",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/caitp/karma-coveralls.git"
+  },
+  "keywords": [
+    "karma-plugin",
+    "coverage",
+    "istanbul",
+    "coveralls.io"
+  ],
+  "author": "Caitlin Potter <caitpotter88@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/caitp/karma-coveralls/issues"
+  },
+  "homepage": "https://github.com/caitp/karma-coveralls",
+  "dependencies": {
+    "coveralls": "~2.8.0",
+    "glob": "~3.2.9"
+  }
+}
