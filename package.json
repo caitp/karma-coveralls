@@ -1,6 +1,6 @@
 {
   "name": "karma-coveralls",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A karma plugin which uploads coverage reports to coveralls.io",
   "main": "lib/index.js",
   "scripts": {
