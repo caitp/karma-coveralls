@@ -30,7 +30,7 @@ or presence in the `.coveralls.yml` configuration file:
 
 ```
 +-------------------------+------------------------+---------------------+
-| ENV VARIABLE            + YAML VARIABLE          + KARMA VARIABLE      |
+| ENV VARIABLE            | YAML VARIABLE          | KARMA VARIABLE      |
 +-------------------------+------------------------+---------------------+
 | `COVERALLS_REPO_TOKEN`  | `repo_token`           | `repoToken`         |
 +-------------------------+------------------------+---------------------+
