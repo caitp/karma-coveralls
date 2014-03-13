@@ -19,7 +19,7 @@ Following this, ensure you are generating lcov reports from the coverage reporte
 
 ```js
   coverageReporter: {
-		type: 'lcov' // lcov or lcovonly are required for generating lcov.info files
+		type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
 		dir: 'coverage/'
 	}
 ```
@@ -35,6 +35,12 @@ or presence in the `.coveralls.yml` configuration file:
 | `COVERALLS_REPO_TOKEN`  | `repo_token`           | `repoToken`         |
 +-------------------------+------------------------+---------------------+
 ```
+
+Please note that is is NOT recommended to save your repo token in plain text for everyone to see.
+Treat it like a password. If you need to include it in a public repo you should [encrypt it](http://docs.travis-ci.com/user/build-configuration/#Secure-environment-variables).
+
+Be patiant when sending coverage information to coveralls, it can take upto 4 hours for things to 
+start showing up properly.
 
 ##Contribution
 
