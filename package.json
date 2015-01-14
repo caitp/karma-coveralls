@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/caitp/karma-coveralls",
   "dependencies": {
-    "coveralls": "~2.8.0",
-    "glob": "~3.2.9"
+    "coveralls": "~2.11.2",
+    "glob": "~4.3.4"
   }
 }
