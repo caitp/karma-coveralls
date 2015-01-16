@@ -4,7 +4,7 @@
   "description": "A karma plugin which uploads coverage reports to coveralls.io",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine-node test/"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
   "dependencies": {
     "coveralls": "~2.11.2",
     "glob": "~4.3.4"
+  },
+  "devDependencies": {
+    "jasmine-node": "^2.0.0"
   }
 }
