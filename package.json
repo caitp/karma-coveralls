@@ -4,7 +4,8 @@
   "description": "A karma plugin which uploads coverage reports to coveralls.io",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/istanbul cover --report lcovonly node_modules/.bin/_mocha test/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "coverage": "./node_modules/.bin/istanbul cover --report lcov node_modules/.bin/_mocha test/"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,14 @@
   "dependencies": {
     "coveralls": "~2.11.2",
     "glob": "~4.3.4"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "fs-extra": "^0.14.0",
+    "istanbul": "^0.3.5",
+    "mocha": "^2.1.0",
+    "mocha-lcov-reporter": "0.0.1",
+    "proxyquire": "^1.3.0",
+    "sinon": "^1.12.2"
   }
 }
