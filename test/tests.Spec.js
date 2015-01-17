@@ -76,7 +76,8 @@ describe('Given the KarmaCoveralls Module', function () {
 
     CoverallsReporter = karmaCoveralls['reporter:coveralls'][1];
 
-    CoverallsReporter.prototype.fireOnExit = function (cb) {
+    // Expose private method
+    CoverallsReporter.prototype._onExit = function (cb) {
       this.onExit(cb);
     };
 
@@ -91,8 +92,6 @@ describe('Given the KarmaCoveralls Module', function () {
   describe('when given the right parameters', function () {
 
     beforeEach(function () {
-
-
 
       helper = {
         isDefined: function () {
@@ -110,7 +109,7 @@ describe('Given the KarmaCoveralls Module', function () {
       };
 
       rootConfig = {
-        reporters: ['coverage', 'coveralls'],
+        reporters: ['coverage', 'coveralls']
       };
     });
 
@@ -125,13 +124,12 @@ describe('Given the KarmaCoveralls Module', function () {
 
 
       var result = new CoverallsReporter(rootConfig, helper, logger);
-      result.fireOnExit(function() {
+      result._onExit(function() {
 
         expect(coverallsMock.sendToCoveralls.called).to.be.true;
         done();
 
       });
-
 
     });
 
@@ -144,7 +142,7 @@ describe('Given the KarmaCoveralls Module', function () {
       };
 
       var result = new CoverallsReporter(rootConfig, helper, logger);
-      result.fireOnExit(function() {
+      result._onExit(function() {
         expect(coverallsMock.sendToCoveralls.called).to.be.true;
         done();
       });
@@ -152,4 +150,5 @@ describe('Given the KarmaCoveralls Module', function () {
     });
 
   });
+
 });
