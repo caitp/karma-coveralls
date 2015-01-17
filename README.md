@@ -1,4 +1,4 @@
-#karma-coveralls
+#karma-coveralls ![dependencies](https://david-dm.org/caitp/karma-coveralls.svg)
 
 A Karma plugin to upload coverage reports to [coveralls.io](https://coveralls.io/)
 
