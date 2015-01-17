@@ -4,7 +4,7 @@
   "description": "A karma plugin which uploads coverage reports to coveralls.io",
   "main": "lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/",
+    "test": "./node_modules/.bin/istanbul cover --report lcov node_modules/.bin/_mocha test/",
     "coverage": "./node_modules/.bin/istanbul cover --report lcov node_modules/.bin/_mocha test/"
   },
   "repository": {
