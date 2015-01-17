@@ -3,20 +3,20 @@
 var chai = require('chai');
 var expect = chai.expect;
 var fs = require('fs-extra');
-var sinon = require('sinon');
 var proxyquire = require('proxyquire');
+var sinon = require('sinon');
 
 
 describe('Given the KarmaCoveralls Module', function () {
 
-  var karmaCoveralls, dir, file;
+  var karmaCoveralls, coverallsMock, dir, file;
 
   before(function (done) {
 
     dir = 'tmp/';
     file = 'lcov.info';
 
-    var coverallsMock = {
+    coverallsMock = {
       getBaseOptions: function(fn) {
         fn(false, {filepath: ''})
       },
@@ -27,6 +27,8 @@ describe('Given the KarmaCoveralls Module', function () {
         cb()
       }
     };
+
+    sinon.spy(coverallsMock, 'sendToCoveralls');
 
     karmaCoveralls = proxyquire('../lib/index.js', { 'coveralls': coverallsMock });
 
@@ -72,8 +74,11 @@ describe('Given the KarmaCoveralls Module', function () {
       create: function () {}
     };
 
-    CoverallsReporter = karmaCoveralls['reporter:coveralls'][1]
+    CoverallsReporter = karmaCoveralls['reporter:coveralls'][1];
 
+    CoverallsReporter.prototype.fireOnExit = function (cb) {
+      this.onExit(cb);
+    };
 
   });
 
@@ -87,14 +92,7 @@ describe('Given the KarmaCoveralls Module', function () {
 
     beforeEach(function () {
 
-      rootConfig = {
-        reporters: ['coverage', 'coveralls'],
-        coverageReporter: {
-          reporters: [
-            {type: 'lcov', dir: 'tmp/'}
-          ]
-        }
-      };
+
 
       helper = {
         isDefined: function () {
@@ -110,19 +108,48 @@ describe('Given the KarmaCoveralls Module', function () {
           }
         }
       };
+
+      rootConfig = {
+        reporters: ['coverage', 'coveralls'],
+      };
     });
 
-    it('should execute the code and invoke the callback', function (cb) {
+    it('should allow using coverageReporter.dir', function(done) {
 
-      CoverallsReporter.prototype.fireOnExit = function (cb) {
-        this.onExit(cb);
-      };
+      rootConfig.coverageReporter = {
+          dir: 'tmp/',
+          reporters: [
+            {type: 'lcov'}
+          ]
+        };
+
+
       var result = new CoverallsReporter(rootConfig, helper, logger);
-      result.fireOnExit(cb);
+      result.fireOnExit(function() {
+
+        expect(coverallsMock.sendToCoveralls.called).to.be.true;
+        done();
+
+      });
+
+
+    });
+
+    it('should execute the code and invoke the callback', function (done) {
+
+      rootConfig.coverageReporter = {
+        reporters: [
+          {type: 'lcov', dir: 'tmp/'}
+        ]
+      };
+
+      var result = new CoverallsReporter(rootConfig, helper, logger);
+      result.fireOnExit(function() {
+        expect(coverallsMock.sendToCoveralls.called).to.be.true;
+        done();
+      });
 
     });
 
   });
-
-
 });
