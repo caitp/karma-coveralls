@@ -12,26 +12,24 @@ describe('Given the KarmaCoveralls Module', function () {
   var karmaCoveralls, coverallsMock, dir, file;
 
   before(function (done) {
-
     dir = 'tmp/';
     file = 'lcov.info';
 
     coverallsMock = {
-      getBaseOptions: function(fn) {
+      getBaseOptions: function (fn) {
         fn(false, {filepath: ''})
       },
-      convertLcovToCoveralls: function(input, options, cb) {
+      convertLcovToCoveralls: function (input, options, cb) {
         cb();
       },
-      sendToCoveralls: function(postData, cb) {
+      sendToCoveralls: function (postData, cb) {
         cb()
       }
     };
 
     sinon.spy(coverallsMock, 'sendToCoveralls');
 
-    karmaCoveralls = proxyquire('../lib/index.js', { 'coveralls': coverallsMock });
-
+    karmaCoveralls = proxyquire('../lib/index.js', {'coveralls': coverallsMock});
 
     // Creates a fake code coverage report file
     fs.mkdirs(dir, function (err) {
@@ -48,30 +46,29 @@ describe('Given the KarmaCoveralls Module', function () {
             done()
           }
         });
-      };
+      }
+      ;
     });
   });
 
-  after(function(done) {
-
-    fs.remove(dir + file, function(err) {
+  after(function (done) {
+    fs.remove(dir + file, function (err) {
       if (err) return console.error(err)
       console.log('Deleting tmp files.');
       done();
     })
-
   });
 
   var CoverallsReporter, rootConfig, helper, logger;
 
   beforeEach(function () {
-
     rootConfig = {
       reporters: ['coveralls', 'coverage']
     };
 
     logger = {
-      create: function () {}
+      create: function () {
+      }
     };
 
     CoverallsReporter = karmaCoveralls['reporter:coveralls'][1];
@@ -80,17 +77,16 @@ describe('Given the KarmaCoveralls Module', function () {
     CoverallsReporter.prototype._onExit = function (cb) {
       this.onExit(cb);
     };
-
   });
+
 
   it('should throw an exception if "coveralls" does not precede "coverage" in the reporters list', function () {
-
-    expect(CoverallsReporter.bind(this, {}, {}, logger)).to.throw(Error, /coverage reporter should precede coveralls/);
-
+    expect(CoverallsReporter.bind(this, {}, {}, logger))
+      .to.throw(Error, /coverage reporter should precede coveralls/);
   });
 
-  describe('when given the right parameters', function () {
 
+  describe('when given the right parameters', function () {
     beforeEach(function () {
 
       helper = {
@@ -102,8 +98,10 @@ describe('Given the KarmaCoveralls Module', function () {
       logger = {
         create: function () {
           return {
-            debug: function () {},
-            info: function() {}
+            debug: function () {
+            },
+            info: function () {
+            }
           }
         }
       };
@@ -113,28 +111,25 @@ describe('Given the KarmaCoveralls Module', function () {
       };
     });
 
-    it('should allow using coverageReporter.dir', function(done) {
 
+    it('should allow using coverageReporter.dir', function (done) {
       rootConfig.coverageReporter = {
-          dir: 'tmp/',
-          reporters: [
-            {type: 'lcov'}
-          ]
-        };
-
+        dir: 'tmp/',
+        reporters: [
+          {type: 'lcov'}
+        ]
+      };
 
       var result = new CoverallsReporter(rootConfig, helper, logger);
-      result._onExit(function() {
+      result._onExit(function () {
 
         expect(coverallsMock.sendToCoveralls.called).to.be.true;
         done();
-
       });
-
     });
 
-    it('should execute the code and invoke the callback', function (done) {
 
+    it('should execute the code and invoke the callback', function (done) {
       rootConfig.coverageReporter = {
         reporters: [
           {type: 'lcov', dir: 'tmp/'}
@@ -142,13 +137,10 @@ describe('Given the KarmaCoveralls Module', function () {
       };
 
       var result = new CoverallsReporter(rootConfig, helper, logger);
-      result._onExit(function() {
+      result._onExit(function () {
         expect(coverallsMock.sendToCoveralls.called).to.be.true;
         done();
       });
-
     });
-
   });
-
 });
