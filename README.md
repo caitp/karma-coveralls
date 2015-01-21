@@ -1,4 +1,4 @@
-#karma-coveralls [![Build Status](https://img.shields.io/travis/caitp/karma-coveralls/master.svg?style=flat)](https://travis-ci.org/caitp/karma-coveralls) ![dependencies](https://david-dm.org/caitp/karma-coveralls.svg)
+#karma-coveralls [![Build Status](https://img.shields.io/travis/caitp/karma-coveralls/master.svg?style=flat)](https://travis-ci.org/caitp/karma-coveralls) [![dependencies](https://img.shields.io/david/caitp/karma-coveralls.svg?style=flat)](https://david-dm.org/caitp/karma-coveralls)
 
 A Karma plugin to upload coverage reports to [coveralls.io](https://coveralls.io/)
 
@@ -39,7 +39,7 @@ or presence in the `.coveralls.yml` configuration file:
 Please note that is is NOT recommended to save your repo token in plain text for everyone to see.
 Treat it like a password. If you need to include it in a public repo you should [encrypt it](http://docs.travis-ci.com/user/build-configuration/#Secure-environment-variables).
 
-Be patiant when sending coverage information to coveralls, it can take upto 4 hours for things to 
+Be patiant when sending coverage information to coveralls, it can take upto 4 hours for things to
 start showing up properly.
 
 ##Contribution
