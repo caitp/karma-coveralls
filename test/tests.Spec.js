@@ -2,17 +2,16 @@
 
 var chai = require('chai');
 var expect = chai.expect;
-var fs = require('fs-extra');
 var proxyquire = require('proxyquire');
 var sinon = require('sinon');
 
+var dir = 'test/fixture';
 
 describe('Given the KarmaCoveralls Module', function () {
 
-  var karmaCoveralls, coverallsMock, dir, file;
+  var karmaCoveralls, coverallsMock, file;
 
-  before(function (done) {
-    dir = 'tmp/';
+  before(function () {
     file = 'lcov.info';
 
     coverallsMock = {
@@ -30,33 +29,6 @@ describe('Given the KarmaCoveralls Module', function () {
     sinon.spy(coverallsMock, 'sendToCoveralls');
 
     karmaCoveralls = proxyquire('../lib/index.js', {'coveralls': coverallsMock});
-
-    // Creates a fake code coverage report file
-    fs.mkdirs(dir, function (err) {
-      if (err) {
-        console.error(err);
-        process.exit(1);
-      } else {
-        fs.outputFile(dir + file, "TN:\nend_of_record", function (err) {
-          if (err) {
-            console.log(err);
-            process.exit(1);
-          } else {
-            console.log('Creating tmp files');
-            done()
-          }
-        });
-      }
-      ;
-    });
-  });
-
-  after(function (done) {
-    fs.remove(dir + file, function (err) {
-      if (err) return console.error(err)
-      console.log('Deleting tmp files.');
-      done();
-    })
   });
 
   var CoverallsReporter, rootConfig, helper, logger;
@@ -114,7 +86,7 @@ describe('Given the KarmaCoveralls Module', function () {
 
     it('should allow using coverageReporter.dir', function (done) {
       rootConfig.coverageReporter = {
-        dir: 'tmp/',
+        dir: dir,
         reporters: [
           {type: 'lcov'}
         ]
@@ -132,7 +104,7 @@ describe('Given the KarmaCoveralls Module', function () {
     it('should execute the code and invoke the callback', function (done) {
       rootConfig.coverageReporter = {
         reporters: [
-          {type: 'lcov', dir: 'tmp/'}
+          {type: 'lcov', dir: dir}
         ]
       };
 
