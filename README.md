@@ -1,4 +1,7 @@
-#karma-coveralls [![Build Status](https://travis-ci.org/caitp/karma-coveralls.svg?branch=master)](https://travis-ci.org/caitp/karma-coveralls) ![dependencies](https://david-dm.org/caitp/karma-coveralls.svg)
+#karma-coveralls 
+[![Build Status](https://travis-ci.org/caitp/karma-coveralls.svg?branch=master)](https://travis-ci.org/caitp/karma-coveralls) 
+![dependencies](https://david-dm.org/caitp/karma-coveralls.svg)
+[![Coverage Status](https://coveralls.io/repos/caitp/karma-coveralls/badge.svg)](https://coveralls.io/r/caitp/karma-coveralls)
 
 A Karma plugin to upload coverage reports to [coveralls.io](https://coveralls.io/)
 
