@@ -25,7 +25,7 @@
   "homepage": "https://github.com/caitp/karma-coveralls",
   "dependencies": {
     "coveralls": "~2.11.2",
-    "glob": "~4.3.4"
+    "glob": "~4.4.2"
   },
   "devDependencies": {
     "chai": "^1.10.0",
