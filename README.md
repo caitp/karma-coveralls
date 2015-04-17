@@ -37,7 +37,7 @@ or presence in the `.coveralls.yml` configuration file:
 ```
 
 Please note that is is NOT recommended to save your repo token in plain text for everyone to see.
-Treat it like a password. If you need to include it in a public repo you should [encrypt it](http://docs.travis-ci.com/user/build-configuration/#Secure-environment-variables).
+Treat it like a password. If you need to include it in a public repo you should [encrypt it](http://docs.travis-ci.com/user/environment-variables/#Secure-Variables).
 
 Be patiant when sending coverage information to coveralls, it can take upto 4 hours for things to
 start showing up properly.
