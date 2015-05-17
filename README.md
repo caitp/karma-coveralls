@@ -6,6 +6,10 @@ Based on the work on [grunt-karma-coveralls](https://github.com/mattjmorrison/gr
 with the primary difference being that this plugin does not depend on grunt, and simply exists as a
 [Karma](http://karma-runner.github.io/) plugin.
 
+##Installation
+
+```npm install karma-coveralls --save-dev```
+
 ##Usage
 
 In your karma configuration, ensure your list of reporters contains at the very least `coverage` and
