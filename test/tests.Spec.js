@@ -4,6 +4,13 @@ var chai = require('chai');
 var expect = chai.expect;
 var proxyquire = require('proxyquire');
 var sinon = require('sinon');
+var Config = require('karma/lib/config').Config;
+
+var createKarmaConfig = function (mockConfig) {
+  var config = new Config();
+  config.set(mockConfig);
+  return config;
+};
 
 var dir = 'test/fixture';
 
@@ -31,10 +38,10 @@ describe('Given the KarmaCoveralls Module', function () {
     karmaCoveralls = proxyquire('../lib/index.js', {'coveralls': coverallsMock});
   });
 
-  var CoverallsReporter, rootConfig, helper, logger;
+  var CoverallsReporter, mockConfig, helper, logger;
 
   beforeEach(function () {
-    rootConfig = {
+    mockConfig = {
       reporters: ['coveralls', 'coverage']
     };
 
@@ -78,21 +85,24 @@ describe('Given the KarmaCoveralls Module', function () {
         }
       };
 
-      rootConfig = {
+      mockConfig = {
+        basePath: __dirname,
+        autoWatch: false,
         reporters: ['coverage', 'coveralls']
       };
     });
 
 
     it('should allow using coverageReporter.dir', function (done) {
-      rootConfig.coverageReporter = {
+      mockConfig.coverageReporter = {
         dir: dir,
         reporters: [
           {type: 'lcov'}
         ]
       };
 
-      var result = new CoverallsReporter(rootConfig, helper, logger);
+      var rootConfig = createKarmaConfig(mockConfig);
+      var result = new CoverallsReporter(mockConfig, helper, logger);
       result._onExit(function () {
 
         expect(coverallsMock.sendToCoveralls.called).to.be.true;
@@ -102,13 +112,14 @@ describe('Given the KarmaCoveralls Module', function () {
 
 
     it('should execute the code and invoke the callback', function (done) {
-      rootConfig.coverageReporter = {
+      mockConfig.coverageReporter = {
         reporters: [
           {type: 'lcov', dir: dir}
         ]
       };
 
-      var result = new CoverallsReporter(rootConfig, helper, logger);
+      var rootConfig = createKarmaConfig(mockConfig);
+      var result = new CoverallsReporter(mockConfig, helper, logger);
       result._onExit(function () {
         expect(coverallsMock.sendToCoveralls.called).to.be.true;
         done();
