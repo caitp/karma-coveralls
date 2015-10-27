@@ -64,6 +64,40 @@ describe('Given the KarmaCoveralls Module', function () {
       .to.throw(Error, /coverage reporter should precede coveralls/);
   });
 
+  describe('when given the coverageReporter type/reporters parameter is not properly defined or undefined', function () {
+    beforeEach(function () {
+
+      mockConfig = {
+        reporters: ['coverage', 'coveralls']
+      };
+
+      helper = {
+        isDefined: function () {
+          return true;
+        }
+      };
+
+      logger = {
+        create: function () {
+          return {
+            debug: function () {
+            },
+            info: function () {
+            }
+          }
+        }
+      };
+    });
+
+
+    it('should log an error if it doesn\'t find LCOV configuration', function (done) {
+      expect(CoverallsReporter.bind(this, mockConfig, helper, logger))
+        .to.throw(Error, /LCOV configuration was not found. Maybe you missed something\?/);
+
+      done();
+    });
+  });
+
 
   describe('when given the right parameters', function () {
     beforeEach(function () {
@@ -104,7 +138,6 @@ describe('Given the KarmaCoveralls Module', function () {
       var rootConfig = createKarmaConfig(mockConfig);
       var result = new CoverallsReporter(mockConfig, helper, logger);
       result._onExit(function () {
-
         expect(coverallsMock.sendToCoveralls.called).to.be.true;
         done();
       });
