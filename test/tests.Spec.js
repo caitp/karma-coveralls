@@ -1,16 +1,14 @@
 'use strict';
 
+var fs = require('fs');
 var chai = require('chai');
-var expect = chai.expect;
+var sinonChai = require('sinon-chai');
 var proxyquire = require('proxyquire');
 var sinon = require('sinon');
 var Config = require('karma/lib/config').Config;
 
-var createKarmaConfig = function (mockConfig) {
-  var config = new Config();
-  config.set(mockConfig);
-  return config;
-};
+chai.use(sinonChai);
+var expect = chai.expect;
 
 var dir = 'test/fixture';
 
@@ -18,7 +16,7 @@ describe('Given the KarmaCoveralls Module', function () {
 
   var karmaCoveralls, coverallsMock, file;
 
-  before(function () {
+  beforeEach(function () {
     file = 'lcov.info';
 
     coverallsMock = {
@@ -33,6 +31,7 @@ describe('Given the KarmaCoveralls Module', function () {
       }
     };
 
+    sinon.spy(coverallsMock, 'convertLcovToCoveralls');
     sinon.spy(coverallsMock, 'sendToCoveralls');
 
     karmaCoveralls = proxyquire('../lib/index.js', {'coveralls': coverallsMock});
@@ -86,7 +85,7 @@ describe('Given the KarmaCoveralls Module', function () {
       };
 
       mockConfig = {
-        basePath: __dirname,
+        basePath: '',
         autoWatch: false,
         reporters: ['coverage', 'coveralls']
       };
@@ -101,11 +100,10 @@ describe('Given the KarmaCoveralls Module', function () {
         ]
       };
 
-      var rootConfig = createKarmaConfig(mockConfig);
       var result = new CoverallsReporter(mockConfig, helper, logger);
       result._onExit(function () {
 
-        expect(coverallsMock.sendToCoveralls.called).to.be.true;
+        expect(coverallsMock.sendToCoveralls).to.have.been.called;
         done();
       });
     });
@@ -118,10 +116,39 @@ describe('Given the KarmaCoveralls Module', function () {
         ]
       };
 
-      var rootConfig = createKarmaConfig(mockConfig);
       var result = new CoverallsReporter(mockConfig, helper, logger);
       result._onExit(function () {
-        expect(coverallsMock.sendToCoveralls.called).to.be.true;
+        expect(coverallsMock.sendToCoveralls).to.have.been.called;
+        done();
+      });
+    });
+
+
+    it('should correctly merge coverage data', function (done) {
+      mockConfig.coverageReporter = {
+        type: 'lcov',
+        dir: dir
+      };
+
+      var result = new CoverallsReporter(mockConfig, helper, logger);
+      result._onExit(function () {
+        var expected = fs.readFileSync('test/expected/lcov.info');
+        expect(coverallsMock.convertLcovToCoveralls)
+          .to.have.been.calledWith(expected.toString());
+        done();
+      });
+    });
+
+
+    it('should not send missing coverage data', function (done) {
+      mockConfig.coverageReporter = {
+        type: 'lcov',
+        dir: 'dummy'
+      };
+
+      var result = new CoverallsReporter(mockConfig, helper, logger);
+      result._onExit(function () {
+        expect(coverallsMock.sendToCoveralls).to.not.have.been.called;
         done();
       });
     });
