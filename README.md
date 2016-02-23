@@ -53,6 +53,9 @@ start showing up properly.
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing
 better examples, or providing some testing, because these things are important.
 
+##Example projects using this plugin
+* [es6-library-boilerplate](https://github.com/CurtisHumphrey/es6-library-boilerplate)
+
 ##License
 
 The MIT License (MIT)
