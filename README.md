@@ -17,16 +17,16 @@ npm install karma-coveralls --save-dev
 In your karma configuration, ensure your list of reporters contains at the very least `coverage` (see [karma-coverage][karma-coverage]) and `coveralls`, for example:
 
 ```js
-  reporters: ['coverage', 'coveralls']
+reporters: ['coverage', 'coveralls']
 ```
 
 Following this, ensure you are generating lcov reports from the [coverage][karma-coverage] reporter, like so:
 
 ```js
-  coverageReporter: {
-    type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
-    dir: 'coverage/'
-  }
+coverageReporter: {
+type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
+dir: 'coverage/'
+}
 ```
 
 And finally, the coveralls reporter depends on some additional configuration, which may be set
