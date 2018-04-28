@@ -58,9 +58,10 @@ describe('Given the KarmaCoveralls Module', function () {
   });
 
 
-  it('should throw an exception if "coveralls" does not precede "coverage" in the reporters list', function () {
+  it('should throw an exception if "coveralls" does not precede "coverage" in the reporters list', function (done) {
     expect(CoverallsReporter.bind(this, {}, {}, logger))
       .to.throw(Error, /coverage reporter should precede coveralls/);
+      done();
   });
 
 
