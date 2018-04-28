@@ -52,6 +52,8 @@ start showing up properly.
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing
 better examples, or providing some testing, because these things are important.
 
+Don't be shy, any approach you come up with to solve problems with this package that you need fixed will be taken seriously.
+
 ## Example projects using this plugin
 * [es6-library-boilerplate](https://github.com/CurtisHumphrey/es6-library-boilerplate)
 
