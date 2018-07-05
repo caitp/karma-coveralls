@@ -1,6 +1,6 @@
 {
   "name": "karma-coveralls",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A karma plugin which uploads coverage reports to coveralls.io",
   "main": "lib/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "homepage": "https://github.com/caitp/karma-coveralls",
   "dependencies": {
     "coveralls": "~3.0.0",
-    "lcov-result-merger": "^2.0.0",
+    "lcov-result-merger": "^3.0.0",
     "through2": "^2.0.0",
     "vinyl-fs": "^3.0.2"
   },
